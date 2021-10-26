@@ -1,5 +1,6 @@
 import './App.css';
 import Welcome from './Welcome';
+import SignUp from './SignUp';
 import Home from './Home';
 import MoodForm from './MoodForm';
 import Stats from './Stats';
@@ -18,6 +19,12 @@ function App() {
       <Switch>
         <Route path='/welcome/:id'>
           <Welcome />
+        </Route>
+        <Route path='/login'>
+          <Login />
+        </Route>
+        <Route path='/sign-up'>
+          <SignUp />
         </Route>
         <Route path='/mood-form'>
           <MoodForm />

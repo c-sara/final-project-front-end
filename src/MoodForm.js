@@ -7,9 +7,6 @@ import HabitButton from './HabitButton'
 import { Component } from 'react'
 import axios from 'axios'
 
-
-// const habitsArr = ['Eat healthy', 'Exercise', 'Adequate sleep', 'Practice meditation', 'Practice gratitude', 'Drink plenty of water', 'Reading', 'Spending time with friends', 'Spending time with family']
-
 class MoodForm extends Component {
   
   state = {
@@ -35,7 +32,7 @@ class MoodForm extends Component {
 
     habits.forEach(habit => {
       if (habit.isChecked) {
-        selectedHabits.push(habit)
+        selectedHabits.push(habit.value)
       }
     })
 
@@ -54,6 +51,8 @@ class MoodForm extends Component {
       .post('/api/moods', { mood, habits, note, date })
       .then(res =>
         console.log(res))
+      .catch(err =>
+        console.log(err))
 
   }
 
@@ -81,7 +80,6 @@ class MoodForm extends Component {
   }
 
   handleTextAreaChange = (e) => {
-    // e.preventDefault()
     this.setState({
       note: e.target.value
     })
@@ -106,7 +104,7 @@ class MoodForm extends Component {
   
           <h1>Notes</h1>
           <h6>Optional: You are able to record anything here. For example: highlights/lowlights of the day, daily affirmations, food journal, etc</h6>
-          <textarea value={this.state.note} onChange={this.handleTextAreaChange}></textarea>
+          <textarea onChange={this.handleTextAreaChange}></textarea>
           <br />
   
           <input type="submit" value="Submit" />
@@ -118,16 +116,3 @@ class MoodForm extends Component {
 }
 
 export default MoodForm
-
-// export default function MoodForm() {
-
-//   return (
-//     <section>
-//       <RecordMood />
-
-//       <RecordHabits />
-
-//       <RecordNotes />
-//     </section>
-//   )
-// }
