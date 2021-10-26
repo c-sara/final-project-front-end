@@ -1,23 +1,41 @@
-import logo from './logo.svg';
 import './App.css';
+import Welcome from './Welcome';
+import Home from './Home';
+import MoodForm from './MoodForm';
+import Stats from './Stats';
+import DailyStats from './DailyStats';
+import Graph from './Graph';
+
+import { Switch, Route, Link } from 'react-router-dom'
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Link to='/'>
+        <h1>MOOD</h1>
+      </Link>
+
+      <Switch>
+        <Route path='/welcome/:id'>
+          <Welcome />
+        </Route>
+        <Route path='/mood-form'>
+          <MoodForm />
+        </Route>
+        <Route path='/stats'>
+          <Stats />
+        </Route>
+        <Route path='/daily-stats'>
+          <DailyStats />
+        </Route>
+        <Route path='/graph'>
+          <Graph />
+        </Route>
+        <Route path='/'>
+          <Home />
+        </Route>
+      </Switch>
+
     </div>
   );
 }
