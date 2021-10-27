@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-export default function Home() {
+export default function Home(props) {
 
   return (
     <section>
@@ -8,13 +8,13 @@ export default function Home() {
         What would you like to do?
       </h1>
 
-      <Link to='/mood-form'>
+      <Link to={`/mood-form/${props.userId}`}>
         <div>
           Record my mood
         </div>
       </Link>
 
-      <Link to='/stats'>
+      <Link to={`/stats/${props.userId}`}>
         <div>
           View my stats
         </div>

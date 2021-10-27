@@ -6,6 +6,7 @@ export default function SignUp() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [submit, setSubmit] = useState(false)
 
   // const errorMessage = <h3>Please fill out all details</h3>
 
@@ -22,10 +23,13 @@ export default function SignUp() {
   }
 
   function handleSubmit(e) {
+    e.preventDefault()
     console.log(e.target)
     let userName = name
     let userEmail = email
     let userPassword = password
+
+    setSubmit(true)
 
     if (userName === '' || userEmail === '' || userPassword === '') {
       console.log('please fill out all details')
@@ -46,13 +50,15 @@ export default function SignUp() {
       <input type="text" onChange={handleName}/>
       <br />
       <label htmlFor="">Email</label>
-      <input type="text" onChange={handleEmail}/>
+      <input type="email" onChange={handleEmail}/>
       <br />
       <label htmlFor="">Password</label>
-      <input type="text" onChange={handlePassword}/>
+      <input type="password" onChange={handlePassword}/>
       <br />
 
       <input type="submit" value="Submit" />
+
+      {submit && (name === '' || email === '' || password === '') ? <h4> Please fill out all the details</h4> : <></>}
 
     </form>
     </>

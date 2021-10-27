@@ -41,14 +41,16 @@ class MoodForm extends Component {
   }
 
   handleSubmit = (e) => {
+    e.preventDefault()
     console.log('form submitted')
+    let userId = this.props.userId
     let mood = this.state.mood
     let habits = this.selectedHabits()
     let note = this.state.note
     let date = new Date().toISOString().slice(0, 10)
 
     axios
-      .post('/api/moods', { mood, habits, note, date })
+      .post('/api/moods', { userId, mood, habits, note, date })
       .then(res =>
         console.log(res))
       .catch(err =>
@@ -86,9 +88,10 @@ class MoodForm extends Component {
   }
 
   render() {
+    console.log(this.props.userId)
     return (
       <section>
-  
+        
         <form onSubmit={this.handleSubmit}>
           <h1>How are you feeling?</h1>
           

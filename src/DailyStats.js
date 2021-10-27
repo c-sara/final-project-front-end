@@ -1,8 +1,7 @@
-import userEvent from "@testing-library/user-event";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-export default function DailyStats() {
+export default function DailyStats(props) {
 
   let currentDate = new Date().toISOString().slice(0, 10)
 
@@ -11,10 +10,11 @@ export default function DailyStats() {
   let [note, setNote] = useState('')
   let [date, setDate] = useState(currentDate)
 
+  let userId = props.userId
 
   useEffect(() => {
 
-    axios.get(`/api/moods/${date}`)
+    axios.get(`/api/moods/${userId}/${date}`)
       .then(res => {
         console.log(res.data)
 
