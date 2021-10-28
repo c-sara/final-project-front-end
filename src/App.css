@@ -37,3 +37,13 @@
   }
 }
 
+.header-title {
+  text-decoration: none;
+  color: black;
+}
+
+.format-btn {
+  text-transform: lowercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+}

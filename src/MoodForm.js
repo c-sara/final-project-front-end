@@ -1,5 +1,6 @@
 import MoodButton from './MoodButton'
 import HabitButton from './HabitButton'
+import './MoodForm.css'
 
 import { Component } from 'react'
 import axios from 'axios'
@@ -13,10 +14,13 @@ class MoodForm extends Component {
       {id: 2, value: 'Drink lots of water', isChecked: false},
       {id: 3, value: 'Adequate sleep', isChecked: false},
       {id: 4, value: 'Exercise', isChecked: false},
-      {id: 5, value: 'Practice meditation/mindfulness', isChecked: false},
+      {id: 5, value: 'Practice meditation', isChecked: false},
       {id: 6, value: 'Practice gratitude', isChecked: false},
       {id: 7, value: 'Spend time with friends/family', isChecked: false},
-      {id: 8, value: 'Complete a personal goal', isChecked: false}
+      {id: 8, value: 'Complete a personal goal', isChecked: false},
+      {id: 9, value: 'Cleaned your space', isChecked: false},
+      {id: 10, value: 'Other', isChecked: false},
+
     ],
     note: '',
     submit: false
@@ -45,20 +49,30 @@ class MoodForm extends Component {
     let mood = this.state.mood
     let habits = this.selectedHabits()
     let note = this.state.note
-    
+
     let dateUtc = new Date()
     let date = dateUtc.toLocaleString('en-US', { timeZone: 'Australia/Melbourne' })
 
-    axios
-      .post('/api/moods', { userId, mood, habits, note, date })
-      .then(res =>
-        console.log(res))
-      .catch(err =>
-        console.log(err))
+    if (mood !== '') {
+      axios
+        .post('/api/moods', { userId, mood, habits, note, date })
+        .then(res =>
+          console.log(res))
+        .catch(err =>
+          console.log(err))
+  
+      this.setState({
+        submit: true
+      })
+  
+      this.props.history.push('/')
+
+    }
 
     this.setState({
       submit: true
     })
+
   }
 
   handleMood = (e) => {
@@ -96,24 +110,40 @@ class MoodForm extends Component {
       <section>
         
         <form onSubmit={this.handleSubmit}>
-          <h1>How are you feeling?</h1>
+          <h3 style={{ 
+      backgroundImage: `url("/blue.png")` 
+    }} className="form-heading">How are you feeling?</h3>
           
           {this.moodsArr.map((mood, idx) => 
             <MoodButton mood={mood} key={idx} handleMood={this.handleMood}/>
           )}
-  
-          <h1>What have you been up to today?</h1>
-      
-          {this.state.habits.map((habit, idx) => 
-            <HabitButton habit={habit} key={idx} handleChecked={this.handleChecked}/>
-          )}
-  
-          <h1>Notes</h1>
-          <h6>Optional: You are able to record anything here. For example: highlights/lowlights of the day, daily affirmations, food journal, etc</h6>
-          <textarea onChange={this.handleTextAreaChange}></textarea>
+
+          <br />
           <br />
   
-          <input type="submit" value="Submit" />
+          <h3 style={{ 
+      backgroundImage: `url("/purple.png")` 
+    }} className="form-heading">What have you been up to today?</h3>
+          <div className="habits-wrapper">
+            {this.state.habits.map((habit, idx) => 
+              <HabitButton habit={habit} key={idx} handleChecked={this.handleChecked}/>
+            )}
+
+          </div>
+
+          <br />
+          <br />
+  
+          <h3 className="note-heading" style={{ 
+      backgroundImage: `url("/green.png")` 
+    }} className="form-heading">Notes</h3>
+          <h6 className="note-description">You are able to record anything here. <br/> For example: highlights/lowlights of the day, daily affirmations, food journal, etc</h6>
+          <textarea onChange={this.handleTextAreaChange}></textarea>
+          
+          <br />
+          <br />
+            
+          <input type="submit" value="Submit" className='format-btn'/>
 
           {this.state.submit && (this.state.mood === '') ? <h4> Please select your mood</h4> : <></>}
   

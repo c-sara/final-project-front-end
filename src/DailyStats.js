@@ -1,6 +1,7 @@
 import axios from "axios";
+import './DailyStats.css'
 import { useState, useEffect } from "react";
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useHistory, Link } from 'react-router-dom'
 
 export default function DailyStats() {
 
@@ -23,10 +24,17 @@ export default function DailyStats() {
         console.log(res.data)
 
         setMood(res.data.mood)
-        setHabits(res.data.habits)
         setNote(res.data.comment)
+
+        setHabits(res.data.habits)
       })
   }, [date])
+
+  let habitsArr = habits.map(habit => {
+    <li>{habit}</li>
+  })
+
+  console.log(habitsArr)
 
   function handleDateChange(e) {
     setDate(e.target.value)
@@ -37,9 +45,41 @@ export default function DailyStats() {
     <section>
       <h1>daily stats</h1>
       <input type="date" onChange={handleDateChange} value={date}/>
-      <h1>{mood}</h1>
-      <h1>{habits}</h1>
-      <h1>{note}</h1>
+      <h4>
+        <div style={{ 
+      backgroundImage: `url("/blue.png")` 
+    }} className="form-heading">
+          mood of the day: 
+        </div>
+        <br/> 
+        {mood}
+      </h4>
+      <h4>
+        <div style={{ 
+      backgroundImage: `url("/purple.png")` 
+    }} className="form-heading">
+          habits of the day:
+        </div>
+        <br />
+        {habits.map(habit => <div> {habit} </div>)}
+      </h4>
+      <h4>
+        <div style={{ 
+      backgroundImage: `url("/green.png")` 
+    }} className="form-heading">
+          notes of the day: 
+        </div>
+        <br/> 
+        {note}
+      </h4>
+      <Link to={`/stats/${userId}`}>
+        <button className='format-btn'>Return to stats</button> 
+      </Link>
+      <br />
+      <br />
+      <Link to="/">
+        <button className='format-btn'>Return home</button> 
+      </Link>
     </section>
   )
 }

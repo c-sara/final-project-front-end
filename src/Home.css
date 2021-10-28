@@ -1,0 +1,10 @@
+.home-links {
+  padding: 10px;
+  color: black;
+}
+
+.home-img {
+  width: 100%;
+  height: 100px;
+  object-fit: contain;
+}

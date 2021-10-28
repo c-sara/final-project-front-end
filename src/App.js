@@ -9,17 +9,20 @@ import DailyStats from './DailyStats';
 import Graph from './Graph';
 
 import { useState } from 'react';
-import { Switch, Route, Link, Redirect } from 'react-router-dom'
+import { Switch, Route, Link, Redirect, useHistory } from 'react-router-dom'
 
 function App() {
 
   const [userId, setUserId] = useState('')
+  const [userName, setUserName] = useState('')
+
+  let history = useHistory();
 
   return (
     <div className="App">
 
-      <Link to='/'>
-        <h1>MOOD</h1>
+      <Link to='/' >
+        <h1 className="header-title" >mood x habits</h1>
       </Link>
 
       <Switch>
@@ -27,13 +30,13 @@ function App() {
           <SignIn />
         </Route>
         <Route path='/login'>
-          <Login setUserId={setUserId}/>
+          <Login setUserId={setUserId} setUserName={setUserName}/>
         </Route>
         <Route path='/sign-up'>
-          <SignUp setUserId={setUserId}/>
+          <SignUp setUserId={setUserId} setUserName={setUserName}/>
         </Route>
         <Route path='/mood-form/:user_id'>
-          {userId ? <MoodForm userId={userId}/> : <Redirect to='/login' />}
+          {userId ? <MoodForm userId={userId} history={history}/> : <Redirect to='/login' />}
         </Route>
         <Route path='/stats/:user_id'>
           {userId ? <Stats userId={userId}/> : <Redirect to='/login' />}
@@ -45,7 +48,7 @@ function App() {
           {userId ? <Graph userId={userId}/> : <Redirect to='/login' />}
         </Route>
         <Route path='/'>
-          {userId ? <Home userId={userId}/> : <Redirect to='/login' />}
+          {userId ? <Home userId={userId} userName={userName}/> : <Redirect to='/login' />}
         </Route>
       </Switch>
 

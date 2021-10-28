@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios'
+import './Login.css'
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -19,9 +20,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      {'Copyright © mood created by '}
+      <Link color="inherit" href="https://c-sara.github.io/portfolio/" target="_blank">
+        Sara Cai
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -38,17 +39,6 @@ export default function SignIn(props) {
   const [submit, setSubmit] = useState(false)
 
   let history = useHistory()
-
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   // eslint-disable-next-line no-console
-  //   console.log({
-  //     email: data.get('email'),
-  //     password: data.get('password'),
-  //   });
-  // };
 
   function handleEmail(e) {
     setEmail(e.target.value)
@@ -75,6 +65,7 @@ export default function SignIn(props) {
           console.log(res.data)
           if (res.data.isLoggedIn) {
             props.setUserId(res.data.userId)
+            props.setUserName(res.data.userName)
             history.push('/')
           }
         })
@@ -130,6 +121,7 @@ export default function SignIn(props) {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              className="sign-in-btn"
             >
               Sign In
             </Button>

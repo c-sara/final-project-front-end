@@ -3,7 +3,9 @@ body {
   font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #91B2C7;
+  /* background-color: #91B2C7; */
+  text-transform: lowercase;
+  font-weight: bold;
 }
 
 code {

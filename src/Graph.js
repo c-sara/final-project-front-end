@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect, React } from "react";
+import { Link } from 'react-router-dom'
 import { Line } from 'react-chartjs-2';
 
 export default function Graph(props) {
@@ -110,18 +111,22 @@ export default function Graph(props) {
 
   return (
     <>
-    <div className='header'>
-      <h3 className='title'>mood x habit</h3>
-      <div className='links'>
-        <a
-          className='btn btn-gh'
-          href='https://github.com/reactchartjs/react-chartjs-2/blob/master/example/src/charts/MultiAxisLine.js'
-        >
-          Github Source
-        </a>
+      <div className='header'>
+        <h3 className='title'>your moods and habits over time</h3>
+        <div className='links'>
+        </div>
       </div>
-    </div>
-    <Line data={data} options={options} />
-  </>
+      <Line data={data} options={options} />
+      <br />
+      <br />
+      <Link to={`/stats/${userId}`}>
+        <button className='format-btn'>Return to stats</button> 
+      </Link>
+      <br />
+      <br />
+      <Link to="/">
+        <button className='format-btn'>Return home</button> 
+      </Link>
+    </>
   )
 }

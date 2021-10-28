@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import './Stats.css'
 
 export default function Stats(props) {
 
@@ -7,11 +8,23 @@ export default function Stats(props) {
 
   return (
     <section>
+      <h4 className="stats-description">Click on the below if you would like to see your mood x habits on a particular date, or all your entries graphed out!</h4>
       <Link to={`/daily-stats/${userId}/${date}`}>
-        <div>Daily</div>
+        <div className="stat-link">Daily</div>
+        <img src="/daily.png" alt="" className="stats-img"/>
       </Link>
+      <br />
+      <br />
       <Link to={`/graph/${userId}`}>
-        <div>Graph</div>
+        <div className="stat-link">Graph</div>
+        <img src="/graph.png" alt="" className="stats-img"/>
+      </Link>
+      <br />
+      <br />
+      <br />
+      <br />
+      <Link to="/">
+        <button className='format-btn'>Return home</button> 
       </Link>
 
     </section>
