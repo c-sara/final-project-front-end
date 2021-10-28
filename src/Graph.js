@@ -1,32 +1,127 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, React } from "react";
+import { Line } from 'react-chartjs-2';
 
 export default function Graph(props) {
 
   // let [mood, setMood] = useState('')
   // let [habits, setHabits] = useState([])
+  let [userData, setUserData] = useState([])
 
   let userId = props.userId
+  let dateArr = []
+  let moodArr = []
+  let habitArr = []
 
   useEffect(() => {
 
     axios.get(`/api/moods/${userId}`)
       .then(res => {
-        console.log(res.data)
-        let dataArr = res.data
-        let moodArr = []
-
-        dataArr.forEach(data => {
-          moodArr.push(data.mood)
-        })
-
-        console.log(moodArr)
+        setUserData(res.data)
       })
   }, [])
 
+  console.log(userData)
+
+  userData.forEach(entry => {
+    dateArr.push(entry.date)
+    moodArr.push(entry.mood)
+    habitArr.push(entry.habits)
+  })
+
+  console.log(dateArr)
+  console.log(moodArr)
+  console.log(habitArr)
+
+  let formattedDateArr = dateArr.map(date => 
+    date.slice(0,10).split('-').reverse().join('/')
+  )
+
+  console.log(formattedDateArr)
+
+  // ['Terrible', 'Bad', 'Okay', 'Good', 'Amazing']
+
+  let formattedMoodArr = moodArr.map(mood => {
+    if (mood === 'Terrible'){
+      return mood = 1
+    } else if (mood === 'Bad'){
+      return mood = 2
+    } else if (mood === 'Okay'){
+      return mood = 3
+    } else if (mood === 'Good'){
+      return mood = 4
+    } else if (mood === 'Amazing'){
+      return mood = 5
+    }
+  })
+
+  console.log(formattedMoodArr)
+
+  let habitCountArr = habitArr.map(habits => habits.length)
+
+  console.log(habitCountArr)
+
+
+
+  const data = {
+    labels: formattedDateArr,
+    datasets: [
+      {
+        label: 'Mood',
+        data: formattedMoodArr,
+        fill: false,
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgba(255, 99, 132, 0.2)',
+        yAxisID: 'y-axis-1',
+      },
+      {
+        label: 'Habit count',
+        data: habitCountArr,
+        fill: false,
+        backgroundColor: 'rgb(54, 162, 235)',
+        borderColor: 'rgba(54, 162, 235, 0.2)',
+        yAxisID: 'y-axis-2',
+      },
+    ],
+  };
+  
+  const options = {
+    scales: {
+      yAxes: [
+        {
+          type: 'linear',
+          display: true,
+          position: 'left',
+          id: 'y-axis-1',
+        },
+        {
+          type: 'linear',
+          display: true,
+          position: 'right',
+          id: 'y-axis-2',
+          gridLines: {
+            drawOnArea: false,
+          },
+        },
+      ],
+    },
+  };
+
+
   return (
-    <section>
-      <h1>graph</h1>
-    </section>
+    <>
+    <div className='header'>
+      <h3 className='title'>mood x habit</h3>
+      <div className='links'>
+        <a
+          className='btn btn-gh'
+          href='https://github.com/reactchartjs/react-chartjs-2/blob/master/example/src/charts/MultiAxisLine.js'
+        >
+          Github Source
+        </a>
+      </div>
+    </div>
+    <Line data={data} options={options} />
+  </>
   )
 }

@@ -1,5 +1,5 @@
 import './App.css';
-// import Welcome from './Welcome';
+import SignIn from './Login';
 import SignUp from './SignUp';
 import Home from './Home';
 import Login from './Login';
@@ -8,61 +8,44 @@ import Stats from './Stats';
 import DailyStats from './DailyStats';
 import Graph from './Graph';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Switch, Route, Link, Redirect } from 'react-router-dom'
-import axios from 'axios';
 
 function App() {
 
   const [userId, setUserId] = useState('')
-  const [redirectToLogin, setRedirectToLogin] = useState(false)
-
-  useEffect(() => {
-    checkLoggedIn()
-  }, [])
-
-  function checkLoggedIn() {
-
-    axios
-      .get('/api/logged-in')
-      .then(dbRes => {
-        if (!dbRes.data.isLoggedIn) {
-          setRedirectToLogin(true)
-        }
-      })
-  }
 
   return (
     <div className="App">
-      {redirectToLogin && <Redirect to='/login' />}
+
       <Link to='/'>
         <h1>MOOD</h1>
       </Link>
 
       <Switch>
-        {/* <Route path='/welcome/:id'>
-          <Welcome />
-        </Route> */}
+        <Route path='/sign-in'>
+          <SignIn />
+        </Route>
         <Route path='/login'>
           <Login setUserId={setUserId}/>
         </Route>
         <Route path='/sign-up'>
-          <SignUp />
+          <SignUp setUserId={setUserId}/>
         </Route>
         <Route path='/mood-form/:user_id'>
-          <MoodForm userId={userId}/>
+          {userId ? <MoodForm userId={userId}/> : <Redirect to='/login' />}
         </Route>
         <Route path='/stats/:user_id'>
-          <Stats userId={userId}/>
+          {userId ? <Stats userId={userId}/> : <Redirect to='/login' />}
         </Route>
         <Route path='/daily-stats/:user_id/:date'>
-          <DailyStats userId={userId}/>
+          {userId ? <DailyStats userId={userId}/> : <Redirect to='/login' />}
         </Route>
         <Route path='/graph/:user_id/'>
-          <Graph userId={userId}/>
+          {userId ? <Graph userId={userId}/> : <Redirect to='/login' />}
         </Route>
         <Route path='/'>
-          <Home userId={userId}/>
+          {userId ? <Home userId={userId}/> : <Redirect to='/login' />}
         </Route>
       </Switch>
 

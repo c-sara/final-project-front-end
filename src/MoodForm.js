@@ -1,6 +1,3 @@
-// import RecordMood from "./RecordMood";
-// import RecordHabits from "./RecordHabits";
-// import RecordNotes from "./RecordNotes";
 import MoodButton from './MoodButton'
 import HabitButton from './HabitButton'
 
@@ -21,7 +18,8 @@ class MoodForm extends Component {
       {id: 7, value: 'Spend time with friends/family', isChecked: false},
       {id: 8, value: 'Complete a personal goal', isChecked: false}
     ],
-    note: ''
+    note: '',
+    submit: false
   }
   
   moodsArr = ['Terrible', 'Bad', 'Okay', 'Good', 'Amazing']
@@ -47,7 +45,9 @@ class MoodForm extends Component {
     let mood = this.state.mood
     let habits = this.selectedHabits()
     let note = this.state.note
-    let date = new Date().toISOString().slice(0, 10)
+    
+    let dateUtc = new Date()
+    let date = dateUtc.toLocaleString('en-US', { timeZone: 'Australia/Melbourne' })
 
     axios
       .post('/api/moods', { userId, mood, habits, note, date })
@@ -56,6 +56,9 @@ class MoodForm extends Component {
       .catch(err =>
         console.log(err))
 
+    this.setState({
+      submit: true
+    })
   }
 
   handleMood = (e) => {
@@ -111,6 +114,8 @@ class MoodForm extends Component {
           <br />
   
           <input type="submit" value="Submit" />
+
+          {this.state.submit && (this.state.mood === '') ? <h4> Please select your mood</h4> : <></>}
   
         </form>
       </section>

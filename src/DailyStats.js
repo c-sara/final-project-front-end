@@ -1,16 +1,20 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useParams, useHistory } from 'react-router-dom'
 
-export default function DailyStats(props) {
+export default function DailyStats() {
 
-  let currentDate = new Date().toISOString().slice(0, 10)
+  let params = useParams()
+  let history = useHistory()
 
   let [mood, setMood] = useState('')
   let [habits, setHabits] = useState([])
   let [note, setNote] = useState('')
-  let [date, setDate] = useState(currentDate)
+  let [date, setDate] = useState(params.date)
 
-  let userId = props.userId
+  let userId = params.user_id
+
+  console.log(params)
 
   useEffect(() => {
 
@@ -26,12 +30,13 @@ export default function DailyStats(props) {
 
   function handleDateChange(e) {
     setDate(e.target.value)
+    history.push(`/daily-stats/${params.user_id}/${e.target.value}`)
   }
 
   return (
     <section>
       <h1>daily stats</h1>
-      <input type="date" onChange={handleDateChange}/>
+      <input type="date" onChange={handleDateChange} value={date}/>
       <h1>{mood}</h1>
       <h1>{habits}</h1>
       <h1>{note}</h1>
