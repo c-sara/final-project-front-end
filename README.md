@@ -1,70 +1,74 @@
-# Getting Started with Create React App
+# mood x habits - back-end
+View the code for my front-end here: https://github.com/c-sara/moodxhabits-front-end
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<img src="public/images/moodxhabits.png"
+     alt="inspect"
+     style="width: 500px" />
 
-## Available Scripts
+## Accessing the site
+Access the app here: http://moodxhabits.herokuapp.com/login
 
-In the project directory, you can run:
+Please note that the mood x habits app is best in mobile mode, as the desktop mode is still in production.
 
-### `npm start`
+To change to mobile view:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Step 1: Right click on the browser and select 'inspect'
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<img src="public/images/inspect.png"
+     alt="inspect"
+     style="width: 500px" />
 
-### `npm test`
+Step 2: Change the icon from desktop to mobile view, circled below
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<img src="public/images/mobile-view.png"
+     alt="mobile-view"
+     style="width: 500px" />
 
-### `npm run build`
+## Features
+mood x habits is a full stack application that allows its users to create and read their daily inputs
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The features include:
+* Sign up/log in functionality with encrypted passwords and an authorisation flow
+    * Users are only allowed into the site if they have an account
+    * A database is used to store user information - passwords are encrypted once users have signed up
+* RESTful routes used
+* Users have the ability to do the following:
+    * Record daily posts regarding their mood, habits and notes for the day
+    * Reflect back on previous posts they have recorded by selecting a specific date
+    * View their stats graphed out on a line chart that compares the user's mood and the number of habits they have accomplished over time
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Technologies used
+### Front end
+* JavaScript, HTML and CSS
+* React.js
+  * Including: React Router DOM and React Chart.js 2
+* Axios
+* MUI
 
-### `npm run eject`
+### Back end
+* JavaScript
+* SQL and PostgreSQL
+* Express
+  * Including: Express Sessions
+* BCrypt
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Approach taken
+### Planning
+For my frontend, I drew up a [wireframe](https://lucid.app/lucidspark/9149a810-a7e5-4582-bd92-37838bd80002/edit?viewport_loc=-3168%2C-1924%2C8160%2C5052%2C0_0&invitationId=inv_3f61ea76-2e0d-4bd0-9758-25c32120794c) of how I wanted my app to look, and how the pages would flow. This gave me a clear indication on what pages need to be worked on. During the process of coding, my final design did change from the original. It was simplier and more efficient to have the mood, habits and notes completed on one page rather than multiple.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+For my backend, I used dbdiagram to plan out the [tables](https://dbdiagram.io/d/617633496239e14647807484) I would need in the database. It was helpful to have this table, as it made it clear what information needed to be inserted into the database from the front end.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Lessons learnt
+* To plan and revist the plan frequently to make sure you are on track or if things need to be revised
+* There is a lot that goes into a full stack application and that it can be a lot to do in 4 days
+* A lot of learning is done when you are working on a project
+  * I learnt more about React, how to use component libraries like MUI and familiarised myself with other technologies I have used in the past (e.g. Axios and Express)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Future improvements
+As there were time constraints with the project, I was not able to deliver everything I would have liked to with my app.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+In the future, I would like to add/improve the following:
+* When selecting a date in the daily stats section, I would love the calendar to be able to disable dates without a daily entry. Alternatively it could highlight the dates with an entry
+* The graph to be updated so it can be clearer when showing the period of time on the x-axis. Currently it is displayed by date in the DD/MM/YYYY format for each point, but I would love for it to be less cluttered when more dates are added (i.e shows months rather than each individual date when there are more entries)
+* Add in a resources sections where users are able to find resources for positive news sites, meditation apps, meal ideas, etc
