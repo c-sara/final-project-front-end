@@ -13,9 +13,13 @@ export default function DailyStats() {
   let [note, setNote] = useState('')
   let [date, setDate] = useState(params.date)
 
+  let moodAvailable = false
+
   let userId = params.user_id
 
-  console.log(params)
+  let habitsArr = []
+
+  // console.log(params)
 
   useEffect(() => {
 
@@ -25,14 +29,22 @@ export default function DailyStats() {
 
         setMood(res.data.mood)
         setNote(res.data.comment)
-
         setHabits(res.data.habits)
+
+        if (res.data.mood !== undefined) {
+          moodAvailable = true
+        }
+
+        habitsArr = res.data.habits.map(habit => {
+          <li>{habit}</li>
+        })
+      })
+      .catch(err => {
+        console.log(err)
+        moodAvailable = false
       })
   }, [date])
 
-  let habitsArr = habits.map(habit => {
-    <li>{habit}</li>
-  })
 
   console.log(habitsArr)
 
@@ -45,10 +57,11 @@ export default function DailyStats() {
     <section>
       <h1>daily stats</h1>
       <input type="date" onChange={handleDateChange} value={date}/>
+
       <h4>
         <div style={{ 
-      backgroundImage: `url("/blue.png")` 
-    }} className="form-heading">
+          backgroundImage: `url("/blue.png")` 
+          }} className="form-heading">
           mood of the day: 
         </div>
         <br/> 
@@ -56,17 +69,17 @@ export default function DailyStats() {
       </h4>
       <h4>
         <div style={{ 
-      backgroundImage: `url("/purple.png")` 
-    }} className="form-heading">
+          backgroundImage: `url("/purple.png")` 
+          }} className="form-heading">
           habits of the day:
         </div>
         <br />
-        {habits.map(habit => <div> {habit} </div>)}
+        {moodAvailable ? habits.map(habit => <div> {habit} </div>) : undefined}
       </h4>
       <h4>
         <div style={{ 
-      backgroundImage: `url("/green.png")` 
-    }} className="form-heading">
+          backgroundImage: `url("/green.png")` 
+          }} className="form-heading">
           notes of the day: 
         </div>
         <br/> 
